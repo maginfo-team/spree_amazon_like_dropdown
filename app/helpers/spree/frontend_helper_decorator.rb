@@ -1,7 +1,7 @@
 Spree::FrontendHelper.module_eval do
 
   def taxon_popup_children(root_taxon, always)
-    #return '' if root_taxon.leaf?
+    return '' if root_taxon.leaf?
     taxons = root_taxon.children.map do |taxon|
       desc = taxon.description.nil? || taxon.description.empty? ? '' : "<span class=\"taxonomies-subtaxon-description\">#{taxon.description}</span>"
       link = link_to("<span class=\"taxonomies-subtaxon-name\">#{taxon.name}</span>#{desc}".html_safe, seo_url(taxon), class: 'taxonomies-subtaxon-link')
@@ -24,7 +24,7 @@ Spree::FrontendHelper.module_eval do
     taxons = tax.children.map do |taxon|
       css_class = (current_taxon == taxon) ? 'list-group-item active' : 'list-group-item'
 
-      popup_children = taxon_popup_children(taxon, current_taxon.nil? || root_taxon == current_taxon);
+      popup_children = taxon_popup_children(taxon, false);
       if !popup_children.empty?
         chevron = '<span class="taxon-chevron glyphicon glyphicon-chevron-right pull-right"></span>'
       else

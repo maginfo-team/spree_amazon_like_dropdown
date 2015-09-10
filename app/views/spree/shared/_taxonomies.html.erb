@@ -15,7 +15,7 @@
 
   $(function() {
 
-    var activateOnHover = <%= @taxon.nil? || @taxonomies.any? { |x| x.root == @taxon } ? 'true' : 'false' %>;
+    var activateOnHover = <%= @taxon.nil? ? 'true' : 'false' %>;
     var $menu = $('#taxonomies_taxons_tree');
     $menu.menuAim({
         activate: activateSubmenu,
@@ -67,7 +67,6 @@
       $('#taxonomies_taxons_tree').removeClass('taxonomies-active');
     }
 
-
     // Bootstrap's dropdown menus immediately close on document click.
     // Don't let this event close the menu if a submenu is being clicked.
     // This event propagation control doesn't belong in the menu-aim plugin
@@ -76,13 +75,6 @@
       e.stopPropagation();
     });
 
-    $(document).click(function() {
-
-      // Simply hide the submenu on any click. Again, this is just a hacked
-      // together menu/submenu structure to show the use of jQuery-menu-aim.
-      //$(".popover").css("display", "none");
-      //$("a.maintainHover").removeClass("maintainHover");
-    });
 
   });
 </script>

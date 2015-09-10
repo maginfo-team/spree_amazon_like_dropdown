@@ -15,7 +15,7 @@
 
   $(function() {
 
-    var activateOnHover = <%= @taxon.nil? ? 'true' : 'false' %>;
+    var activateOnHover = false; //<%= @taxon.nil? || @taxonomies.any? { |x| x.root == @taxon } ? 'true' : 'false' %>;
     var $menu = $('#taxonomies_taxons_tree');
     $menu.menuAim({
         activate: activateSubmenu,

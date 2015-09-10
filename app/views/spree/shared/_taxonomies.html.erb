@@ -1,0 +1,88 @@
+<% max_level = Spree::Config[:max_level_in_taxons_menu] || 1 %>
+
+<nav id="taxonomies" class="sidebar-item hidden-xs" data-hook>
+
+  <div id="taxonomies_wrap">
+    <% @taxonomies.each do |taxonomy| %>
+      <% cache [I18n.locale, taxonomy, max_level] do %>
+        <%= taxons_tree(taxonomy.root, @taxon, max_level) %>
+      <% end %>
+    <% end %>
+  </div>
+</nav>
+
+<script type="text/javascript">
+
+  $(function() {
+
+    var activateOnHover = <%= @taxon.nil? || @taxonomies.any? { |x| x.root == @taxon } ? 'true' : 'false' %>;
+    var $menu = $('#taxonomies_taxons_tree');
+    $menu.menuAim({
+        activate: activateSubmenu,
+        deactivate: deactivateSubmenu,
+        exitMenu: function(menu, e) {
+
+          $menu.stop(true, false);
+
+          var $target = $(e.target);
+          if ($target.hasClass('popover')) {
+            if (e.pageX < $target.offset().left + $target.width()
+                && e.pageY > $target.offset().top
+                && e.pageY < $target.offset().top + $target.height()) {
+              return;
+            }
+          }
+          $(".popover").css("display", "none");
+          $("a.maintainHover").removeClass("maintainHover");
+          $('#taxonomies_taxons_tree').removeClass('taxonomies-active');
+        },
+    });
+
+    function activateSubmenuHelper($row, $submenu) {
+      $submenu.css({
+        display: "block",
+        left: $menu.outerWidth(),
+        height: $menu.outerHeight(),
+        top: -0
+      });
+      if (activateOnHover || $submenu.find('.taxonomies-subtaxon').length > 0) {
+        $('#taxonomies_taxons_tree').addClass('taxonomies-active');
+      }
+    }
+
+    function activateSubmenu(row) {
+      var $row = $(row);
+      var $submenu = $row.find('.popover');
+      $('#link_to_cart_items_wrap').hide();
+      activateSubmenuHelper($row, $submenu);
+      $row.find("a").addClass("maintainHover");
+    }
+
+    function deactivateSubmenu(row) {
+      var $row = $(row);
+      var $submenu = $row.find('.popover');
+      // Hide the submenu and remove the row's highlighted look
+      $submenu.css("display", "none");
+      $row.find("a").removeClass("maintainHover");
+      $('#taxonomies_taxons_tree').removeClass('taxonomies-active');
+    }
+
+
+    // Bootstrap's dropdown menus immediately close on document click.
+    // Don't let this event close the menu if a submenu is being clicked.
+    // This event propagation control doesn't belong in the menu-aim plugin
+    // itself because the plugin is agnostic to bootstrap.
+    $(".dropdown-menu li").click(function(e) {
+      e.stopPropagation();
+    });
+
+    $(document).click(function() {
+
+      // Simply hide the submenu on any click. Again, this is just a hacked
+      // together menu/submenu structure to show the use of jQuery-menu-aim.
+      //$(".popover").css("display", "none");
+      //$("a.maintainHover").removeClass("maintainHover");
+    });
+
+  });
+</script>

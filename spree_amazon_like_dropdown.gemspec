@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_amazon_like_dropdown'
-  s.version     = '3.0.0'
+  s.version     = '0.1.0'
   s.summary     = 'Provides dropdown taxonomies menu like Amazon\'s.'
   #s.description = 'TODO: Add (optional) gem description here'
   s.required_ruby_version = '>= 2.0.0'

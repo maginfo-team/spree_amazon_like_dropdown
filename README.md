@@ -1,4 +1,4 @@
-SpreeAmazonLikeDropdown
+Spree amazon-like dropdown menu
 =======================
 
 Introduction goes here.

@@ -1,7 +1,7 @@
 Spree amazon-like dropdown menu
 =======================
 
-Provides dropdown taxonomies menu like Amazon's. We use [jQuery-menu-aim](https://github.com/kamens/jQuery-menu-aim) plugin to implement it. 
+Provides dropdown taxonomies menu like Amazon's. Based on the [jQuery-menu-aim](https://github.com/kamens/jQuery-menu-aim) plugin. 
 
 Installation
 ------------

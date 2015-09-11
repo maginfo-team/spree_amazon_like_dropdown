@@ -9,7 +9,7 @@ Installation
 Add spree_amazon_like_dropdown to your Gemfile:
 
 ```ruby
-gem 'spree_amazon_like_dropdown'
+gem 'spree_amazon_like_dropdown', github: 'maginfo-team/spree_amazon_like_dropdown'
 ```
 
 Bundle your dependencies and run the installation generator:

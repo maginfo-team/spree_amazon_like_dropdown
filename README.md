@@ -19,4 +19,4 @@ bundle
 bundle exec rails g spree_amazon_like_dropdown:install
 ```
 
-Released under the New BSD License
+Copyright (c) 2015 Maginfo Ltd, released under the New BSD License

@@ -3,11 +3,24 @@
 <nav id="taxonomies" class="sidebar-item hidden-xs" data-hook>
 
   <div id="taxonomies_wrap">
-    <% @taxonomies.each do |taxonomy| %>
-      <% cache [I18n.locale, taxonomy, max_level] do %>
-        <%= taxons_tree(taxonomy.root, @taxon, max_level) %>
-      <% end %>
-    <% end %>
+
+    <%
+      @taxonomies.each_with_index do |taxonomy, index|
+        cache [I18n.locale, taxonomy, max_level] do
+          if index == 0
+            content = taxons_tree2(taxonomy.root, @taxon, max_level)
+            unless content.empty?
+              concat "<h4 class='taxonomy-root'>#{Spree.t(:shop_by_taxonomy, :taxonomy => taxonomy.name)}</h4>".html_safe
+              concat content
+            end
+          else
+            concat "<h4 class='taxonomy-root'>#{Spree.t(:shop_by_taxonomy, :taxonomy => taxonomy.name)}</h4>".html_safe
+            concat taxons_tree(taxonomy.root, @taxon, max_level)
+          end
+        end
+      end
+
+    %>
   </div>
 </nav>
 
@@ -15,7 +28,7 @@
 
   $(function() {
 
-    var activateOnHover = false; //<%= @taxon.nil? || @taxonomies.any? { |x| x.root == @taxon } ? 'true' : 'false' %>;
+    var activateOnHover = false; //<%= @taxonomies.any? { |x| x.root == @taxon } ? 'true' : 'false' %>;
     var $menu = $('#taxonomies_taxons_tree');
     $menu.menuAim({
         activate: activateSubmenu,

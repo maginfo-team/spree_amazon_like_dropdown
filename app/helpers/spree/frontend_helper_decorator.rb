@@ -15,7 +15,7 @@ Spree::FrontendHelper.module_eval do
     </div>".html_safe
   end
 
-  def taxons_tree(root_taxon, current_taxon, max_level = 1, offset = '')
+  def taxons_tree2(root_taxon, current_taxon, max_level = 1, offset = '')
 
     return '' if root_taxon.leaf?
 
@@ -23,9 +23,10 @@ Spree::FrontendHelper.module_eval do
 
     taxons = tax.children.map do |taxon|
       css_class = (current_taxon == taxon) ? 'list-group-item active' : 'list-group-item'
-
-      popup_children = taxon_popup_children(taxon, false);
-      if !popup_children.empty?
+      popup_children = taxon_popup_children(taxon, false)
+      show_chevron = false
+      popup_children = '' if !current_taxon.nil? && current_taxon != root_taxon
+      if show_chevron || !popup_children.empty?
         chevron = '<span class="taxon-chevron glyphicon glyphicon-chevron-right pull-right"></span>'
       else
         chevron = ''
@@ -37,6 +38,8 @@ Spree::FrontendHelper.module_eval do
     end
 
     html = taxons.join("\n").html_safe
+
+    return '' if html.empty?
 
     if offset == ''
       content_tag :ul, html, class: 'list-group', id: 'taxonomies_taxons_tree'

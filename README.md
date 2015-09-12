@@ -3,7 +3,7 @@ Spree amazon-like dropdown menu
 
 Provides dropdown taxonomies menu like Amazon's. Based on the [jQuery-menu-aim](https://github.com/kamens/jQuery-menu-aim) plugin. 
 
-Demo: https://agile-chamber-2284.herokuapp.com
+Demo: https://spreecommerce-demo.herokuapp.com/
 
 Installation
 ------------

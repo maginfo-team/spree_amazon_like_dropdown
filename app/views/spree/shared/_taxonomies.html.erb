@@ -48,6 +48,10 @@
         deactivate: deactivateSubmenu,
         exitMenu: function(menu, e) {
 
+          if (isUnderCursor($(".popover"), e)) {
+            return false;
+          }
+
           $menu.stop(true, false);
 
           var $target = $(e.target);

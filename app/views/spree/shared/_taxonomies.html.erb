@@ -26,6 +26,19 @@
 
 <script type="text/javascript">
 
+  /**
+   * Checks if jQuery element $element is under the cursor. Uses mouse event
+   * object to do this.
+   */
+  function isUnderCursor($element, mouseEvent) {
+    var x = mouseEvent.clientX;
+    var y = mouseEvent.clientY;
+    elementMouseIsOver = document.elementFromPoint(x, y);
+    return $(elementMouseIsOver).parents().is(function() {
+      return $(this).is($element);
+    });
+  }
+
   $(function() {
 
     var activateOnHover = false; //<%= @taxonomies.any? { |x| x.root == @taxon } ? 'true' : 'false' %>;

@@ -1,6 +1,6 @@
 <% max_level = Spree::Config[:max_level_in_taxons_menu] || 1 %>
 
-<nav id="taxonomies" class="sidebar-item hidden-xs" data-hook>
+<nav id="taxonomies" class="sidebar-item" data-hook>
 
   <div id="taxonomies_wrap">
 
@@ -41,13 +41,16 @@
 
   $(function() {
 
+    function isPopoverEnabled() {
+      return $(window).width() >= 768;
+    }
+
     var activateOnHover = false; //<%= @taxonomies.any? { |x| x.root == @taxon } ? 'true' : 'false' %>;
     var $menu = $('#taxonomies_taxons_tree');
     $menu.menuAim({
         activate: activateSubmenu,
         deactivate: deactivateSubmenu,
         exitMenu: function(menu, e) {
-
           if (isUnderCursor($(".popover"), e)) {
             return false;
           }
@@ -69,6 +72,9 @@
     });
 
     function activateSubmenuHelper($row, $submenu) {
+      if (!isPopoverEnabled()) {
+        return;
+      }
       $submenu.css({
         display: "block",
         left: $menu.outerWidth(),
